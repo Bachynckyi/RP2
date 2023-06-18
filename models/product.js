@@ -19,7 +19,8 @@ const ProductSchema = Schema({
         }
     },
     prices: {
-      type: Array,
+      type: Object,
+      required: true,
     },
 }, {versionKey: false});
 
