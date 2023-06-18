@@ -22,7 +22,7 @@ app.use(express.static("public"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/auth", authRouter);
 app.use("/api/user/pets", userPetRouter);
-app.use("/api/notices", noticeRouter);
+app.use("/api/product", noticeRouter);
 
 
 app.use((req, res) => {

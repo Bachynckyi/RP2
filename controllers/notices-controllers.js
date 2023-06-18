@@ -1,8 +1,8 @@
 const { ctrlWrapper } = require("../utils");
-const { Notice } = require("../models/notice");
+const { Notice } = require("../models/product");
 const { HttpError } = require("../helpers");
 const { User } = require("../models/user");
-const { addNoticeValidation } = require("../models/notice");
+const { addNoticeValidation } = require("../models/product");
 
 const addNotice = async (req, res) => {
   const {title}  = req.body;
