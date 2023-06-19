@@ -5,32 +5,32 @@ const {handleMongooseError} = require("../utils");
 const ProductSchema = Schema({
    title: {
     type: String,
-    // required: true,
+    required: true,
    },
    description: {
     type: String,
-    // required: true,
+    required: true,
    },
    category: {
     type: String,
     enum: ["Emali", "Gruntovki", "Emali&gruntovki3v1"],
-    // required: true,
+    required: true,
    },
    price: {
     type: String,
-    // required: true,
+    required: true,
    },
    type: {
     type: String,
-    // required: true,
+    required: true,
    },
    color: {
     type: String,
-    // required: true,
+    required: true,
    },
    photo: {
     type: String,
-    // required: true,
+    required: true,
    }
 }, {versionKey: false});
 
