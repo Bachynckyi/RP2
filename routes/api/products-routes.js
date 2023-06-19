@@ -1,11 +1,11 @@
 const express = require("express");
-const ctrl = require("../../controllers/notices-controllers");
+const ctrl = require("../../controllers/products-controllers");
 const router = express.Router();
 // const { isValidId } = require("../../middlewares");
 const { authenticate } = require("../../middlewares");
 const uploadCloud = require("../../middlewares/uploadMiddleware");
 
-router.post("/addproduct", authenticate, uploadCloud.single("image"), ctrl.addNotice);
+router.post("/addproduct", authenticate, uploadCloud.single("image"), ctrl.addProduct);
 // router.get("/", ctrl.getNoticesBySearchOrCategory);
 // router.get("/userfavoritenotices", authenticate, ctrl.getNoticesAddedToFavoriteByUser);
 // router.get("/mynotices", authenticate, ctrl.getNoticesСreatedByUser);
