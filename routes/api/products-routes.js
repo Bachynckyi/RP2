@@ -5,7 +5,7 @@ const router = express.Router();
 const { authenticate } = require("../../middlewares");
 const uploadCloud = require("../../middlewares/uploadMiddleware");
 
-router.post("/addproduct", authenticate, uploadCloud.single("image"), ctrl.addProduct);
+router.post("/addproduct", authenticate, uploadCloud.single("photo"), ctrl.addProduct);
 // router.get("/", ctrl.getNoticesBySearchOrCategory);
 // router.get("/userfavoritenotices", authenticate, ctrl.getNoticesAddedToFavoriteByUser);
 // router.get("/mynotices", authenticate, ctrl.getNoticesСreatedByUser);
