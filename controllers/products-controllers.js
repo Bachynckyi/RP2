@@ -6,7 +6,7 @@ const { addProductValidation } = require("../models/product");
 
 const addProduct = async (req, res) => {
   // const {title}  = req.body;
-  const {error} = addProductValidation.validate({...req.body, photo: req.file.path});
+  const {error} = addProductValidation.validate(req.body);
   if(error) {
     return res.status(400).json({"message": error.message});
   };
