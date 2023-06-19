@@ -55,9 +55,6 @@ const addProductValidation = Joi.object({
     description: Joi.string().required().messages({
       "any.required": "missing required field - Description",
     }),
-    photo: Joi.required().messages({
-      "any.required": "missing required field - Photo",
-    }),
 });
 
 const Product = model("products", ProductSchema);
