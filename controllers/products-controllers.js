@@ -6,10 +6,10 @@ const { addProductValidation } = require("../models/product");
 
 const addProduct = async (req, res) => {
   // const {title}  = req.body;
-  const {error} = addProductValidation.validate(req.body);
-  if(error) {
-    return res.status(400).json({"message": error.message});
-  };
+  // const {error} = addProductValidation.validate(req.body);
+  // if(error) {
+  //   return res.status(400).json({"message": error.message});
+  // };
   const result = await Product.create({...req.body, photo: req.file.path});
   res.status(201).json(result)
   // const maxSizeOfAvatar = 3145728;
