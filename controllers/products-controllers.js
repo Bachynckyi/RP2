@@ -1,15 +1,16 @@
 const { ctrlWrapper } = require("../utils");
 const { Product } = require("../models/product");
+const { Category } = require("../models/category");
 const { HttpError } = require("../helpers");
 const { User } = require("../models/user");
-const { addProductValidation } = require("../models/product");
+const { addProductValidation, addCategoryValidation } = require("../models/product");
 
 const addProduct = async (req, res) => {
   // const {title}  = req.body;
-  // const {error} = addProductValidation.validate(req.body);
-  // if(error) {
-  //   return res.status(400).json({"message": error.message});
-  // };
+  const {error} = addProductValidation.validate(req.body);
+  if(error) {
+    return res.status(400).json({"message": error.message});
+  };
   const result = await Product.create({...req.body, photo: req.file.path});
   res.status(201).json(result)
   // const maxSizeOfAvatar = 3145728;
@@ -39,6 +40,20 @@ const addProduct = async (req, res) => {
   //   }
   // }
 };
+
+const addCategory = async (req, res) => {
+  const {error} = addCategoryValidation.validate(req.body);
+  if(error) {
+    return res.status(400).json({"message": error.message});
+  };
+  const result = await Category.create({...req.body, photo: req.file.path});
+  res.status(201).json(result)
+};
+
+
+
+
+
 
 const getNoticeById = async (req, res) => {
   const {id: idNotice} = req.params;
@@ -153,6 +168,7 @@ const deleteNoticeFromFavorite = async (req, res) => {
 
 module.exports = {
     addProduct: ctrlWrapper(addProduct),
+    addCategory: ctrlWrapper(addCategory),
     getNoticesBySearchOrCategory: ctrlWrapper(getNoticesBySearchOrCategory),
     getNoticeById: ctrlWrapper(getNoticeById),
     getNoticesСreatedByUser: ctrlWrapper(getNoticesСreatedByUser),

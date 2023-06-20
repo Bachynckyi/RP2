@@ -6,6 +6,7 @@ const { authenticate } = require("../../middlewares");
 const uploadCloud = require("../../middlewares/uploadMiddleware");
 
 router.post("/addproduct", authenticate, uploadCloud.single("photo"), ctrl.addProduct);
+router.post("/addcategory", authenticate, uploadCloud.single("photo"), ctrl.addCategory);
 // router.get("/", ctrl.getNoticesBySearchOrCategory);
 // router.get("/userfavoritenotices", authenticate, ctrl.getNoticesAddedToFavoriteByUser);
 // router.get("/mynotices", authenticate, ctrl.getNoticesСreatedByUser);
