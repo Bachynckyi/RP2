@@ -3,7 +3,8 @@ const { Product } = require("../models/product");
 const { Category } = require("../models/category");
 const { HttpError } = require("../helpers");
 const { User } = require("../models/user");
-const { addProductValidation, addCategoryValidation } = require("../models/product");
+const { addProductValidation } = require("../models/product");
+const { addCategoryValidation} = require("../models/category");
 
 const addProduct = async (req, res) => {
   // const {title}  = req.body;
