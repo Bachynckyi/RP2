@@ -51,6 +51,14 @@ const addCategory = async (req, res) => {
   res.status(201).json(result)
 };
 
+const getAllCategories = async (req, res) => {
+  const result = await Category.find()
+  if (!result) {
+    throw HttpError(404, "Not Found");
+  }
+  res.json(result);
+};
+
 
 
 
@@ -170,6 +178,9 @@ const deleteNoticeFromFavorite = async (req, res) => {
 module.exports = {
     addProduct: ctrlWrapper(addProduct),
     addCategory: ctrlWrapper(addCategory),
+    getAllCategories: ctrlWrapper(getAllCategories),
+
+
     getNoticesBySearchOrCategory: ctrlWrapper(getNoticesBySearchOrCategory),
     getNoticeById: ctrlWrapper(getNoticeById),
     getNoticesСreatedByUser: ctrlWrapper(getNoticesСreatedByUser),
