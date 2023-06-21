@@ -13,7 +13,6 @@ const ProductSchema = Schema({
    },
    category: {
     type: String,
-    enum: ["Emali", "Gruntovki", "Emali&gruntovki3v1"],
     required: true,
    },
    price: {
