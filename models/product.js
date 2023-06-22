@@ -30,6 +30,10 @@ const ProductSchema = Schema({
    photo: {
     type: String,
     required: true,
+   },
+   code: {
+    type: String,
+    required: true,
    }
 }, {versionKey: false});
 
@@ -53,6 +57,9 @@ const addProductValidation = Joi.object({
     }),
     description: Joi.string().required().messages({
       "any.required": "missing required field - Description",
+    }),
+    code: Joi.string().required().messages({
+      "any.required": "missing required field - Code",
     }),
 });
 
