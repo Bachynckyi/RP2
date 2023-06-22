@@ -59,6 +59,35 @@ const getAllCategories = async (req, res) => {
   res.json(result);
 };
 
+const getProductByCategory = async (req, res) => {
+  const category = req.params.id;
+  const result = await Product.find({category: category});
+  res.status(200).json(result)
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -179,7 +208,7 @@ module.exports = {
     addProduct: ctrlWrapper(addProduct),
     addCategory: ctrlWrapper(addCategory),
     getAllCategories: ctrlWrapper(getAllCategories),
-
+    getProductByCategory: ctrlWrapper(getProductByCategory),
 
     getNoticesBySearchOrCategory: ctrlWrapper(getNoticesBySearchOrCategory),
     getNoticeById: ctrlWrapper(getNoticeById),
