@@ -10,6 +10,10 @@ const CategorySchema = Schema({
    photo: {
     type: String,
     required: true,
+   },
+   name: {
+    type: String,
+    required: true,
    }
 }, {versionKey: false});
 
@@ -18,6 +22,9 @@ CategorySchema.post("save", handleMongooseError);
 const addCategoryValidation = Joi.object({
     title: Joi.string().required().messages({
       "any.required": "missing required field - Title",
+    }),
+    name: Joi.string().required().messages({
+      "any.required": "missing required field - Name",
     }),
 });
 
