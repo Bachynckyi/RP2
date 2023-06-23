@@ -7,8 +7,13 @@ const uploadCloud = require("../../middlewares/uploadMiddleware");
 
 router.post("/addproduct", authenticate, uploadCloud.single("photo"), ctrl.addProduct);
 router.post("/addcategory", authenticate, uploadCloud.single("photo"), ctrl.addCategory);
+router.post("/addsubcategory", authenticate, uploadCloud.single("photo"), ctrl.addSubcategory);
+
 router.get("/getallcategories", ctrl.getAllCategories);
+router.get("/getallsubcategories", ctrl.getAllSubcategories);
 router.get("/getproductbycategory/:id", ctrl.getProductByCategory);
+
+
 // router.get("/userfavoritenotices", authenticate, ctrl.getNoticesAddedToFavoriteByUser);
 // router.get("/mynotices", authenticate, ctrl.getNoticesСreatedByUser);
 // router.get("/:id", isValidId, ctrl.getNoticeById);
