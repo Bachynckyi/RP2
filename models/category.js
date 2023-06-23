@@ -7,7 +7,7 @@ const CategorySchema = Schema({
     type: String,
     required: true,
    },
-   photo: {
+   photoCategory: {
     type: String,
     required: true,
    },

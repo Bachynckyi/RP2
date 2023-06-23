@@ -7,7 +7,7 @@ const SubcategorySchema = Schema({
     type: String,
     required: true,
    },
-   photo: {
+   photoSubcategory: {
     type: String,
     required: true,
    },
