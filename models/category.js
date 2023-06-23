@@ -3,7 +3,7 @@ const Joi = require("joi");
 const {handleMongooseError} = require("../utils");
 
 const CategorySchema = Schema({
-   title: {
+   nameCategory: {
     type: String,
     required: true,
    },
@@ -11,20 +11,28 @@ const CategorySchema = Schema({
     type: String,
     required: true,
    },
-   name: {
+   routeCategory: {
     type: String,
     required: true,
-   }
+   },
+   descriptionCategory: {
+    type: String,
+    required: true,
+   },
+
 }, {versionKey: false});
 
 CategorySchema.post("save", handleMongooseError);
 
 const addCategoryValidation = Joi.object({
-    title: Joi.string().required().messages({
-      "any.required": "missing required field - Title",
+    nameCategory: Joi.string().required().messages({
+      "any.required": "missing required field - nameCategory",
     }),
-    name: Joi.string().required().messages({
-      "any.required": "missing required field - Name",
+    routeCategory: Joi.string().required().messages({
+      "any.required": "missing required field - routeCategory",
+    }),
+    descriptionCategory: Joi.string().required().messages({
+      "any.required": "missing required field - routeCategory",
     }),
 });
 
