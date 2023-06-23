@@ -64,6 +64,7 @@ const addProductValidation = Joi.object({
     code: Joi.string().required().messages({
       "any.required": "missing required field - Code",
     }),
+    subcategory: Joi.string().allow(''),
 });
 
 const Product = model("products", ProductSchema);
