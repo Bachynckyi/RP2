@@ -37,7 +37,6 @@ const ProductSchema = Schema({
    },
    subcategory: {
     type: String,
-    required: true,
    },
 }, {versionKey: false});
 
@@ -65,8 +64,8 @@ const addProductValidation = Joi.object({
     code: Joi.string().required().messages({
       "any.required": "missing required field - Code",
     }),
-    subcategory: Joi.string().required().messages({
-      "any.required": "missing required field - Subcategory",
+    subcategory: Joi.string().messages({
+      "any.required": "field - Subcategory is not string",
     }),
 });
 
