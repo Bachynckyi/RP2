@@ -19,6 +19,11 @@ const SubcategorySchema = Schema({
     type: String,
     required: true,
    },
+    category: {
+    type: String,
+    required: true,
+   },
+   
 }, {versionKey: false});
 
 SubcategorySchema.post("save", handleMongooseError);
@@ -32,6 +37,9 @@ const addSubcategoryValidation = Joi.object({
     }),
     descriptionSubcategory: Joi.string().required().messages({
       "any.required": "missing required field - descriptionSubcategory",
+    }),
+    category: Joi.string().required().messages({
+      "any.required": "missing required field - category",
     }),
 
 });
