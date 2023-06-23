@@ -49,7 +49,7 @@ const addCategory = async (req, res) => {
   if(error) {
     return res.status(400).json({"message": error.message});
   };
-  const result = await Category.create({...req.body, photo: req.file.path});
+  const result = await Category.create({...req.body, photoCategory: req.file.path});
   res.status(201).json(result)
 };
 
@@ -58,7 +58,7 @@ const addSubcategory = async (req, res) => {
   if(error) {
     return res.status(400).json({"message": error.message});
   };
-  const result = await Subcategory.create({...req.body, photo: req.file.path});
+  const result = await Subcategory.create({...req.body, photoSubcategory: req.file.path});
   res.status(201).json(result)
 };
 

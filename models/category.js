@@ -32,7 +32,7 @@ const addCategoryValidation = Joi.object({
       "any.required": "missing required field - routeCategory",
     }),
     descriptionCategory: Joi.string().required().messages({
-      "any.required": "missing required field - routeCategory",
+      "any.required": "missing required field - descriptionCategory",
     }),
 });
 
