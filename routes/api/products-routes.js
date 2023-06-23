@@ -6,8 +6,8 @@ const { authenticate } = require("../../middlewares");
 const uploadCloud = require("../../middlewares/uploadMiddleware");
 
 router.post("/addproduct", authenticate, uploadCloud.single("photo"), ctrl.addProduct);
-router.post("/addcategory", authenticate, uploadCloud.single("photo"), ctrl.addCategory);
-router.post("/addsubcategory", authenticate, uploadCloud.single("photo"), ctrl.addSubcategory);
+router.post("/addcategory", authenticate, uploadCloud.single("photoCategory"), ctrl.addCategory);
+router.post("/addsubcategory", authenticate, uploadCloud.single("photoSubcategory"), ctrl.addSubcategory);
 
 router.get("/getallcategories", ctrl.getAllCategories);
 router.get("/getallsubcategories", ctrl.getAllSubcategories);
