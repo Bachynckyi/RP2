@@ -37,7 +37,7 @@ const addSubcategoryValidation = Joi.object({
       "any.required": "missing required field - nameSubcategory",
     }),
     subcategory: Joi.string().required().messages({
-      "any.required": "missing required field - routeSubcategory",
+      "any.required": "missing required field - subcategory",
     }),
     descriptionSubcategory: Joi.string().required().messages({
       "any.required": "missing required field - descriptionSubcategory",
