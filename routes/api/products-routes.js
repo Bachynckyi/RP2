@@ -12,6 +12,8 @@ router.post("/addsubcategory", authenticate, uploadCloud.single("photoSubcategor
 router.get("/getallcategories", ctrl.getAllCategories);
 router.get("/getallsubcategories", ctrl.getAllSubcategories);
 router.get("/getproductbycategory/:id", ctrl.getProductByCategory);
+router.get("/getsubcategory", ctrl.getSubcategoryByCategory);
+
 
 
 // router.get("/userfavoritenotices", authenticate, ctrl.getNoticesAddedToFavoriteByUser);

@@ -84,6 +84,15 @@ const getProductByCategory = async (req, res) => {
   res.status(200).json(result)
 };
 
+const getSubcategoryByCategory = async (req, res) => {
+  const {category: categoryProduct} = req.query;
+  const result = await Subcategory.find({category: categoryProduct})
+  if (!result) {
+    throw HttpError(404, "Not Found");
+  }
+  res.json(result);
+};
+
 
 
 
@@ -230,6 +239,7 @@ module.exports = {
     getAllCategories: ctrlWrapper(getAllCategories),
     getAllSubcategories: ctrlWrapper(getAllSubcategories),
     getProductByCategory: ctrlWrapper(getProductByCategory),
+    getSubcategoryByCategory: ctrlWrapper(getSubcategoryByCategory),
 
     getNoticesBySearchOrCategory: ctrlWrapper(getNoticesBySearchOrCategory),
     getNoticeById: ctrlWrapper(getNoticeById),
