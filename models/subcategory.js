@@ -23,6 +23,10 @@ const SubcategorySchema = Schema({
     type: String,
     required: true,
    },
+   routeCategory: {
+    type: String,
+    required: true,
+   },
    
 }, {versionKey: false});
 
@@ -40,6 +44,9 @@ const addSubcategoryValidation = Joi.object({
     }),
     category: Joi.string().required().messages({
       "any.required": "missing required field - category",
+    }),
+    routeCategory: Joi.string().required().messages({
+      "any.required": "missing required field - routeCategory",
     }),
 
 });

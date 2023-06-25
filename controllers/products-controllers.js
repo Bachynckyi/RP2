@@ -93,14 +93,7 @@ const getSubcategoryByCategory = async (req, res) => {
   res.json(result);
 };
 
-const getСategory = async (req, res) => {
-  const {routeCategory: category} = req.query;
-  const result = await Category.find({routeCategory: category})
-  if (!result) {
-    throw HttpError(404, "Not Found");
-  }
-  res.json(result);
-};
+
 
 
 
@@ -249,7 +242,6 @@ module.exports = {
     getAllSubcategories: ctrlWrapper(getAllSubcategories),
     getProductByCategory: ctrlWrapper(getProductByCategory),
     getSubcategoryByCategory: ctrlWrapper(getSubcategoryByCategory),
-    getСategory: ctrlWrapper(getСategory),
 
     getNoticesBySearchOrCategory: ctrlWrapper(getNoticesBySearchOrCategory),
     getNoticeById: ctrlWrapper(getNoticeById),
