@@ -80,13 +80,13 @@ const getAllSubcategories = async (req, res) => {
 
 const getProductByCategory = async (req, res) => {
   const category = req.params.id;
-  const result = await Product.find({routeCategory: category});
+  const result = await Product.find({category: category});
   res.status(200).json(result)
 };
 
 const getSubcategoryByCategory = async (req, res) => {
-  const {routeCategory: category} = req.query;
-  const result = await Subcategory.find({routeCategory: category})
+  const category = req.params.id;
+  const result = await Subcategory.find({category: category})
   if (!result) {
     throw HttpError(404, "Not Found");
   }
