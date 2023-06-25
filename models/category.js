@@ -11,7 +11,7 @@ const CategorySchema = Schema({
     type: String,
     required: true,
    },
-   routeCategory: {
+   category: {
     type: String,
     required: true,
    },
@@ -28,8 +28,8 @@ const addCategoryValidation = Joi.object({
     nameCategory: Joi.string().required().messages({
       "any.required": "missing required field - nameCategory",
     }),
-    routeCategory: Joi.string().required().messages({
-      "any.required": "missing required field - routeCategory",
+    category: Joi.string().required().messages({
+      "any.required": "missing required field - category",
     }),
     descriptionCategory: Joi.string().required().messages({
       "any.required": "missing required field - descriptionCategory",

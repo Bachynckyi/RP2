@@ -80,7 +80,7 @@ const getAllSubcategories = async (req, res) => {
 
 const getProductByCategory = async (req, res) => {
   const category = req.params.id;
-  const result = await Product.find({category: category});
+  const result = await Product.find({routeCategory: category});
   res.status(200).json(result)
 };
 
