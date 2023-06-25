@@ -85,8 +85,8 @@ const getProductByCategory = async (req, res) => {
 };
 
 const getSubcategoryByCategory = async (req, res) => {
-  const {category: categoryProduct} = req.query;
-  const result = await Subcategory.find({category: categoryProduct})
+  const {routeCategory: category} = req.query;
+  const result = await Subcategory.find({routeCategory: category})
   if (!result) {
     throw HttpError(404, "Not Found");
   }
