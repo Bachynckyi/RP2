@@ -14,6 +14,7 @@ router.get("/getallsubcategories", ctrl.getAllSubcategories);
 router.get("/getsubcategorybycategory/:id", ctrl.getSubcategoryByCategory);
 
 router.get("/getproductbycategory/:id", ctrl.getProductByCategory);
+router.get("/getproductbysearch/", ctrl.getProductBySearch);
 
 // router.get("/userfavoritenotices", authenticate, ctrl.getNoticesAddedToFavoriteByUser);
 // router.get("/mynotices", authenticate, ctrl.getNoticesСreatedByUser);

@@ -93,6 +93,15 @@ const getSubcategoryByCategory = async (req, res) => {
   res.json(result);
 };
 
+const getProductBySearch = async (req, res) => {
+  const search = req.query.search;
+  const result = await Product.find({$or:[{title: { $regex: search, $options: 'i' }},{code: { $regex: search, $options: 'i' }}]});
+  if (!result) {
+    throw HttpError(404, "Not Found");
+  }
+  res.json(result);
+};
+
 
 
 
@@ -242,6 +251,7 @@ module.exports = {
     getAllSubcategories: ctrlWrapper(getAllSubcategories),
     getProductByCategory: ctrlWrapper(getProductByCategory),
     getSubcategoryByCategory: ctrlWrapper(getSubcategoryByCategory),
+    getProductBySearch: ctrlWrapper(getProductBySearch),
 
     getNoticesBySearchOrCategory: ctrlWrapper(getNoticesBySearchOrCategory),
     getNoticeById: ctrlWrapper(getNoticeById),
