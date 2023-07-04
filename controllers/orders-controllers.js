@@ -13,9 +13,9 @@ const addOrderByOneClick = async (req, res) => {
     const result = await Order.create({...req.body});
     const email = {
       to: "colorfarb@gmail.com",
-      subject: `Нове замовлення ${result._id}`,
+      subject: `Нове замовлення ${result.date}`,
       html: 
-        `<h1>Нове замовлення${result._id}</h1>
+        `<h1>Нове замовлення ${result._id}</h1>
         <p>Дата: ${result.date}</p>
         <p>Ім'я клієнта: ${result.customerName}</p>
         <p>Телефон клієнта: ${result.customerPhone}</p>
@@ -24,8 +24,8 @@ const addOrderByOneClick = async (req, res) => {
         <p>Фасовка: ${result.type}</p>
         <p>Кількість: ${result.quantity}</p>
         <p>Код товару: ${result.code}</p>
-        <p>Ціна за шт: ${result.price}</p>
-        <p>Вартість: ${Number(result.price)*Number(result.quantity)}</p>`
+        <p>Ціна за шт: ${result.price} грн</p>
+        <p>Вартість: ${Number(result.price)*Number(result.quantity)} грн</p>`
   };
   await sendEmail(email);
   res.status(201).json(result);
