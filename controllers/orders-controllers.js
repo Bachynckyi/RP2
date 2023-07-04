@@ -22,10 +22,10 @@ const addOrderByOneClick = async (req, res) => {
         <p>Назва товару: ${result.title}</p>
         <p>Колір: ${result.color}</p>
         <p>Фасовка: ${result.type}</p>
-        <p>Кількість: ${result.quantity}</p>
+        <p>Кількість: ${result.quantity} шт</p>
         <p>Код товару: ${result.code}</p>
         <p>Ціна за шт: ${result.price} грн</p>
-        <p>Вартість: ${Number(result.price)*Number(result.quantity)} грн</p>`
+        <p>Вартість: ${(Number(result.price)*Number(result.quantity)).toFixed(2)} грн</p>`
   };
   await sendEmail(email);
   res.status(201).json(result);
