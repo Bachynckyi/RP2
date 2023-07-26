@@ -34,8 +34,7 @@ const OrderBasketSchema = Schema({
     type: String,
    },
    confirmedOrder :{
-    type: Object,
-    required: true,
+
    },
 }, {versionKey: false});
 
