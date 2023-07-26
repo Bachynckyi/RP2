@@ -34,7 +34,8 @@ const OrderBasketSchema = Schema({
     type: String,
    },
    confirmedOrder :{
-
+    type: Array,
+    required: true,
    },
 }, {versionKey: false});
 
@@ -65,7 +66,7 @@ const orderValidation = Joi.object({
     typeOfDelivery: Joi.string().required().allow("").messages({
         "any.required": "missing required field - typeOfDelivery",
     }),
-    confirmedOrder: Joi.object().required().messages({
+    confirmedOrder: Joi.array().required().messages({
         "any.required": "missing required field - confirmedOrder",
     }),
 });
