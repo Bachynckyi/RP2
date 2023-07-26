@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 const {handleMongooseError} = require("../utils");
 
-const OrderSchema = Schema({
+const OrderOneClickSchema = Schema({
    title: {
     type: String,
     required: true,
@@ -41,7 +41,7 @@ const OrderSchema = Schema({
    },
 }, {versionKey: false});
 
-OrderSchema.post("save", handleMongooseError);
+OrderOneClickSchema.post("save", handleMongooseError);
 
 const orderValidation = Joi.object({
     title: Joi.string().required().messages({
@@ -73,9 +73,9 @@ const orderValidation = Joi.object({
   }),
 });
 
-const Order = model("order", OrderSchema);
+const OrderOneClick = model("one-click-order", OrderOneClickSchema);
 
 module.exports = {
-    Order,
+    OrderOneClick,
     orderValidation,
   };
