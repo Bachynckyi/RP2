@@ -1,5 +1,5 @@
 const { ctrlWrapper } = require("../utils");
-const { Order } = require("../models/orderOneclick");
+const { OrderOneClick } = require("../models/orderOneclick");
 const { HttpError } = require("../helpers");
 const { orderValidation } = require("../models/orderOneclick");
 const sendEmail = require("../helpers/sendEmail");
@@ -10,7 +10,7 @@ const addOrderByOneClick = async (req, res) => {
     if(error) {
       return res.status(400).json({"message": error.message});
     };
-    const result = await Order.create({...req.body});
+    const result = await OrderOneClick.create({...req.body});
     const email = {
       to: "colorfarb@gmail.com",
       subject: `Нове замовлення в один клік ${result.date}`,
