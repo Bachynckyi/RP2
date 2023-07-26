@@ -43,7 +43,7 @@ const OrderOneClickSchema = Schema({
 
 OrderOneClickSchema.post("save", handleMongooseError);
 
-const orderValidation = Joi.object({
+const orderOneClickValidation = Joi.object({
     title: Joi.string().required().messages({
       "any.required": "missing required field - title",
     }),
@@ -77,5 +77,5 @@ const OrderOneClick = model("one-click-order", OrderOneClickSchema);
 
 module.exports = {
     OrderOneClick,
-    orderValidation,
+    orderOneClickValidation,
   };

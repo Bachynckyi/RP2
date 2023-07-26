@@ -1,12 +1,14 @@
 const { ctrlWrapper } = require("../utils");
 const { OrderOneClick } = require("../models/orderOneclick");
+const { OrderBasket } = require("../models/orderBasket");
 const { HttpError } = require("../helpers");
-const { orderValidation } = require("../models/orderOneclick");
+const { orderOneClickValidation } = require("../models/orderOneclick");
+const { orderValidation } = require("../models/orderBasket");
 const sendEmail = require("../helpers/sendEmail");
 
 
 const addOrderByOneClick = async (req, res) => {
-    const {error} = orderValidation.validate(req.body);
+    const {error} = orderOneClickValidation.validate(req.body);
     if(error) {
       return res.status(400).json({"message": error.message});
     };
@@ -31,6 +33,16 @@ const addOrderByOneClick = async (req, res) => {
   res.status(201).json(result);
 };
 
+const addOrderByBasket = async (req, res) => {
+  const {error} = orderValidation.validate(req.body);
+  if(error) {
+    return res.status(400).json({"message": error.message});
+  };
+  const result = await OrderBasket.create({...req.body});
+res.status(201).json(result);
+};
+
 module.exports = {
     addOrderByOneClick: ctrlWrapper(addOrderByOneClick),
+    addOrderByBasket: ctrlWrapper(addOrderByBasket),
 };
