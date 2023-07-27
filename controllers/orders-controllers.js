@@ -43,13 +43,15 @@ const addOrderByBasket = async (req, res) => {
     for (const item of result.confirmedOrder) {
       const itemsOforder = 
       `
+      <li>
       <h3>Назва товару: ${item.title}</h3>
       <p>Код товару: ${item.code}</p>
       <p>Ціна за шт: ${item.price} грн</p>
-      <p>Фасовка: ${item.type} грн</p>
-      <p>Колір: ${item.color} грн</p>
-      <p>Кількість: ${item.quantity} грн</p>
+      <p>Фасовка: ${item.type}</p>
+      <p>Колір: ${item.color}</p>
+      <p>Кількість: ${item.quantity}</p>
       <p>Вартість: ${(Number(item.price)*Number(item.quantity)).toFixed(2)} грн</p>
+      </li>
       `
       order.splice(0,0, itemsOforder);
     };
@@ -62,10 +64,14 @@ const addOrderByBasket = async (req, res) => {
         `<h1>Нове замовлення № ${result._id}</h1>
         <p>Дата: ${result.date}</p>
         <p>Ім'я клієнта: ${result.customerName}</p>
+        <p>Прізвище клієнта: ${result.customerSurname}</p>
         <p>Телефон клієнта: ${result.phone}</p>
+        <p>Коментар до замовлення: 
+          <p>${result.comments}</p>
+        </p>
         <p>Тип доставки: Самовивіз</p>
         <h2>Замовлення</h2>
-        <div>${order}</div>
+        <ol>${order}</ol>
         <h3>Загальна сума до сплати: ${result.totalAmount}</h3>`
     }
   await sendEmail(email);
@@ -79,13 +85,17 @@ const addOrderByBasket = async (req, res) => {
         `<h1>Нове замовлення № ${result._id}</h1>
         <p>Дата: ${result.date}</p>
         <p>Ім'я клієнта: ${result.customerName}</p>
+        <p>Прізвище клієнта: ${result.customerSurname}</p>
         <p>Телефон клієнта: ${result.phone}</p>
+        <p>Коментар до замовлення: 
+          <p>${result.comments}</p>
+        </p>
         <p>Тип доставки: Delivery</p>
         <p>Населений пункт: ${result.locality}</p>
         <p>Відділення: ${result.branchNumber}</p>
         <h2>Замовлення</h2>
-        <div>${order}</div>
-        <h3>Загальна сума до сплати: ${result.totalAmount}</h3>`
+        <ol>${order}</ol>
+        <h3>Загальна сума до сплати: ${result.totalAmount} грн</h3>`
     }
     await sendEmail(email);
     res.status(201).json(result);
@@ -98,13 +108,17 @@ const addOrderByBasket = async (req, res) => {
         `<h1>Нове замовлення № ${result._id}</h1>
         <p>Дата: ${result.date}</p>
         <p>Ім'я клієнта: ${result.customerName}</p>
+        <p>Прізвище клієнта: ${result.customerSurname}</p>
         <p>Телефон клієнта: ${result.phone}</p>
+        <p>Коментар до замовлення: 
+          <p>${result.comments}</p>
+        </p>
         <p>Тип доставки: Нова пошта</p>
         <p>Населений пункт: ${result.locality}<p/>
         <p>Відділення: ${result.branchNumber}</p>
         <h2>Замовлення</h2>
-        <div>${order}</div>
-        <h3>Загальна сума до сплати: ${result.totalAmount}</h3>`
+        <ol>${order}</ol>
+        <h3>Загальна сума до сплати: ${result.totalAmount} грн</h3>`
     }
     await sendEmail(email);
     res.status(201).json(result);
