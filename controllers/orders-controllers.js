@@ -66,13 +66,11 @@ const addOrderByBasket = async (req, res) => {
         <p>Ім'я клієнта: ${result.customerName}</p>
         <p>Прізвище клієнта: ${result.customerSurname}</p>
         <p>Телефон клієнта: ${result.phone}</p>
-        <p>Коментар до замовлення: 
-          <p>${result.comments}</p>
-        </p>
+        <p>Коментар до замовлення: ${result.comments}</p>
         <p>Тип доставки: Самовивіз</p>
         <h2>Замовлення</h2>
         <ol>${order}</ol>
-        <h3>Загальна сума до сплати: ${result.totalAmount}</h3>`
+        <h3>Загальна сума до сплати: ${result.totalAmount} грн</h3>`
     }
   await sendEmail(email);
   res.status(201).json(result);
@@ -87,9 +85,7 @@ const addOrderByBasket = async (req, res) => {
         <p>Ім'я клієнта: ${result.customerName}</p>
         <p>Прізвище клієнта: ${result.customerSurname}</p>
         <p>Телефон клієнта: ${result.phone}</p>
-        <p>Коментар до замовлення: 
-          <p>${result.comments}</p>
-        </p>
+        <p>Коментар до замовлення: ${result.comments}</p>
         <p>Тип доставки: Delivery</p>
         <p>Населений пункт: ${result.locality}</p>
         <p>Відділення: ${result.branchNumber}</p>
@@ -110,9 +106,7 @@ const addOrderByBasket = async (req, res) => {
         <p>Ім'я клієнта: ${result.customerName}</p>
         <p>Прізвище клієнта: ${result.customerSurname}</p>
         <p>Телефон клієнта: ${result.phone}</p>
-        <p>Коментар до замовлення: 
-          <p>${result.comments}</p>
-        </p>
+        <p>Коментар до замовлення: ${result.comments}</p>
         <p>Тип доставки: Нова пошта</p>
         <p>Населений пункт: ${result.locality}<p/>
         <p>Відділення: ${result.branchNumber}</p>
