@@ -33,8 +33,12 @@ const OrderBasketSchema = Schema({
    branchNumber: {
     type: String,
    },
-   confirmedOrder :{
+   confirmedOrder: {
     type: Array,
+    required: true,
+   },
+   totalAmount: {
+    type: String,
     required: true,
    },
 }, {versionKey: false});
@@ -68,6 +72,9 @@ const orderValidation = Joi.object({
     }),
     confirmedOrder: Joi.array().required().messages({
         "any.required": "missing required field - confirmedOrder",
+    }),
+    totalAmount: Joi.string().required().allow("").messages({
+        "any.required": "missing required field - totalAmount",
     }),
 });
 

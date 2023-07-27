@@ -1,7 +1,6 @@
 const { ctrlWrapper } = require("../utils");
 const { OrderOneClick } = require("../models/orderOneclick");
 const { OrderBasket } = require("../models/orderBasket");
-const { HttpError } = require("../helpers");
 const { orderOneClickValidation } = require("../models/orderOneclick");
 const { orderValidation } = require("../models/orderBasket");
 const sendEmail = require("../helpers/sendEmail");
@@ -39,7 +38,7 @@ const addOrderByBasket = async (req, res) => {
   };
   const result = await OrderBasket.create({...req.body});
 
-  let order = [];
+  const order = [];
 
     for (const item of result.confirmedOrder) {
       const itemsOforder = 
@@ -67,7 +66,7 @@ const addOrderByBasket = async (req, res) => {
         <p>Тип доставки: Самовивіз</p>
         <h2>Замовлення</h2>
         <div>${order}</div>
-        <h3>Загальна сума до сплати: </h3>`
+        <h3>Загальна сума до сплати: ${result.totalAmount}</h3>`
     }
   await sendEmail(email);
   res.status(201).json(result);
@@ -86,7 +85,7 @@ const addOrderByBasket = async (req, res) => {
         <p>Відділення: ${result.branchNumber}</p>
         <h2>Замовлення</h2>
         <div>${order}</div>
-        <h3>Загальна сума до сплати: </h3>`
+        <h3>Загальна сума до сплати: ${result.totalAmount}</h3>`
     }
     await sendEmail(email);
     res.status(201).json(result);
@@ -105,7 +104,7 @@ const addOrderByBasket = async (req, res) => {
         <p>Відділення: ${result.branchNumber}</p>
         <h2>Замовлення</h2>
         <div>${order}</div>
-        <h3>Загальна сума до сплати: </h3>`
+        <h3>Загальна сума до сплати: ${result.totalAmount}</h3>`
     }
     await sendEmail(email);
     res.status(201).json(result);
