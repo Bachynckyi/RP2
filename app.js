@@ -8,7 +8,6 @@ const swaggerDocument = require("./swagger.json");
 require("dotenv").config();
 
 const authRouter = require("././routes/api/auth-routes");
-const userPetRouter = require("./routes/api/userPets-routes");
 const productRouter = require("./routes/api/products-routes");
 const orderRouter = require("./routes/api/order-routes");
 
@@ -22,7 +21,6 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/auth", authRouter);
-app.use("/api/user/pets", userPetRouter);
 app.use("/api/product", productRouter);
 app.use("/api/orders", orderRouter);
 

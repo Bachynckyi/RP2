@@ -59,7 +59,7 @@ const addOrderByBasket = async (req, res) => {
       to: "colorfarb@gmail.com",
       subject: `Нове замовлення ${result.date}`,
       html: 
-        `<h1>Нове замовлення №${result._id}</h1>
+        `<h1>Нове замовлення № ${result._id}</h1>
         <p>Дата: ${result.date}</p>
         <p>Ім'я клієнта: ${result.customerName}</p>
         <p>Телефон клієнта: ${result.phone}</p>
@@ -76,7 +76,7 @@ const addOrderByBasket = async (req, res) => {
       to: "colorfarb@gmail.com",
       subject: `Нове замовлення ${result.date}`,
       html: 
-        `<h1>Нове замовлення ${result._id}</h1>
+        `<h1>Нове замовлення № ${result._id}</h1>
         <p>Дата: ${result.date}</p>
         <p>Ім'я клієнта: ${result.customerName}</p>
         <p>Телефон клієнта: ${result.phone}</p>
@@ -95,7 +95,7 @@ const addOrderByBasket = async (req, res) => {
       to: "colorfarb@gmail.com",
       subject: `Нове замовлення ${result.date}`,
       html: 
-        `<h1>Нове замовлення ${result._id}</h1>
+        `<h1>Нове замовлення № ${result._id}</h1>
         <p>Дата: ${result.date}</p>
         <p>Ім'я клієнта: ${result.customerName}</p>
         <p>Телефон клієнта: ${result.phone}</p>
