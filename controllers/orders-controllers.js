@@ -49,7 +49,7 @@ const addOrderByBasket = async (req, res) => {
       <p>Ціна за шт: ${item.price} грн</p>
       <p>Фасовка: ${item.type}</p>
       <p>Колір: ${item.color}</p>
-      <p>Кількість: ${item.quantity}</p>
+      <p>Кількість: ${item.quantity} шт</p>
       <p>Вартість: ${(Number(item.price)*Number(item.quantity)).toFixed(2)} грн</p>
       </li>
       `
