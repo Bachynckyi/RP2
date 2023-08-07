@@ -101,9 +101,18 @@ const getProductBySearch = async (req, res) => {
   res.json(result);
 };
 
-const updateCategory = async (req, res) => {
+const updateCategoryWithPhoto = async (req, res) => {
   const { id } = req.params;
   const result = await Category.findByIdAndUpdate(id, {...req.body, photoCategory: req.file.path}, { new: true });
+  if (!result) {
+    throw HttpError(404, `Not found`);
+  }
+  res.json(result);
+};
+
+const updateCategoryWithoutPhoto = async (req, res) => {
+  const { id } = req.params;
+  const result = await Category.findByIdAndUpdate(id, {...req.body}, { new: true });
   if (!result) {
     throw HttpError(404, `Not found`);
   }
@@ -160,6 +169,7 @@ module.exports = {
     getProductByCategory: ctrlWrapper(getProductByCategory),
     getSubcategoryByCategory: ctrlWrapper(getSubcategoryByCategory),
     getProductBySearch: ctrlWrapper(getProductBySearch),
-    updateCategory: ctrlWrapper(updateCategory),
+    updateCategoryWithPhoto: ctrlWrapper(updateCategoryWithPhoto),
+    updateCategoryWithoutPhoto: ctrlWrapper(updateCategoryWithoutPhoto),
     // updateSubCategory: ctrlWrapper(updateSubCategory),
 };

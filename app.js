@@ -24,7 +24,6 @@ app.use("/api/auth", authRouter);
 app.use("/api/product", productRouter);
 app.use("/api/orders", orderRouter);
 
-
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });
