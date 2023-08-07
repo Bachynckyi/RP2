@@ -3,7 +3,6 @@ const { Product } = require("../models/product");
 const { Category } = require("../models/category");
 const { Subcategory } = require("../models/subcategory");
 const { HttpError } = require("../helpers");
-const { User } = require("../models/user");
 const { addProductValidation } = require("../models/product");
 const { addCategoryValidation} = require("../models/category");
 const { addSubcategoryValidation} = require("../models/subcategory");
@@ -102,146 +101,55 @@ const getProductBySearch = async (req, res) => {
   res.json(result);
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const getNoticeById = async (req, res) => {
-  const {id: idNotice} = req.params;
-  const result = await Product.findById(idNotice)
+const updateCategory = async (req, res) => {
+  const { id } = req.params;
+  const result = await Category.findByIdAndUpdate(id, {...req.body, photoCategory: req.file.path}, { new: true });
   if (!result) {
-    throw HttpError(404, "Not Found");
+    throw HttpError(404, `Not found`);
   }
   res.json(result);
 };
 
-const getNoticesСreatedByUser = async (req, res) => {
-  const {id: ownerNotice} = req.user;
-  const result = await Product.find({ownerNotice: ownerNotice});
-  if (JSON.stringify(result) === "[]") {
-    res.status(200).json([]);
-  }
-  else{
-    res.status(200).json(result);
-  }
-};
+// const updateSubCategory = async (req, res) => {
+//   const { id } = req.params;
+//   const result = await Subcategory.findByIdAndUpdate(id, {...req.body, photoCategory: req.file.path}, { new: true });
+//   if (!result) {
+//     throw HttpError(404, `Not found`);
+//   }
+//   res.json(result);
+// };
 
-const deleteNoticeCreatedByUser = async (req, res) => {
-  const { id: idNotice} = req.params;
-  const { id: ownerNotice} = req.user;
-  const response = await Product.findOneAndRemove({_id: idNotice, ownerNotice: ownerNotice});
-  console.log(response);
-  if(response === null){
-    throw HttpError(404, "Not Found");
-  }
-  else {
-  res.status(200).json({"message": "contact deleted"});
-  };
-};
 
-const getNoticesBySearchOrCategory = async (req, res) => {
-  const { search: titleNotice, category: categoryNotice } = req.query;
-  const {page, limit} = req.query;
-  const skip = (page - 1 ) * limit; 
-  if(titleNotice && !categoryNotice) {
-    const result = await Product.find({ title: { $regex: titleNotice, $options: 'i' }}, "", {skip, limit});
-    if(JSON.stringify(result) === "[]") {
-      res.status(200).json([]);
-    }
-    res.status(200).json(result);
-  }
-  else if(categoryNotice && !titleNotice) {
-    const result = await Product.find({category: categoryNotice}, "", {skip, limit});
-    if(JSON.stringify(result) === "[]") {
-      res.status(200).json([]);
-      }
-      res.status(200).json(result);
-  }
-  else if(titleNotice && categoryNotice) {
-    const result = await Product.find({category: categoryNotice, title: { $regex: titleNotice, $options: 'i' }}, "", {skip, limit});
-    if(JSON.stringify(result) === "[]") {
-      res.status(200).json([]);
-      }
-      res.status(200).json(result);
-  }
-  else if(!titleNotice && !categoryNotice) {
-    throw HttpError(404, "Not Found");
-  };
-};
 
-const addNoticeToFavorite = async (req, res) => {
-  const { id: idNotice} = req.params;
-  const { _id } = req.user;
-  const idNoticeCheck = await Product.findById(idNotice);
-    if (!idNoticeCheck) {
-    throw HttpError(404, `Not found`);
-  }
-  const favoriteCheck = await User.find({_id: _id, favorite: idNotice});
-  if(Object.keys(favoriteCheck).length === 0){
-    await User.findByIdAndUpdate(_id, {$push: { favorite: idNotice }});
-    const result = await User.findById(_id)
-    res.status(201).json(result);
-  }
-  else{
-    throw HttpError(409, "This notice is already added to favorite");
-  }
 
-};
 
-const getNoticesAddedToFavoriteByUser = async (req, res) => {
-  const { _id } = req.user;
-  const result = await User.findById({_id});
-  if (!result) {
-    throw HttpError(404, `Not found`);
-  };
-  const allFavoriteNotices = result.favorite;
-  const data = [];
-  for (let i = 0; i < allFavoriteNotices.length; i++) {
-    const currentNotice = allFavoriteNotices[i];
-    const getNoticeById = await Product.findById({_id: currentNotice});
-    data.push(getNoticeById);
-  };
-  res.status(200).json(data);
-};
 
-const deleteNoticeFromFavorite = async (req, res) => {
-  const { id: idNotice} = req.params;
-  const { _id } = req.user;
-  const result = await User.findById({_id});
-  const favoriteData = result.favorite;
-  if(!favoriteData.includes(idNotice)){
-    throw HttpError(404, `Not found`);
-  }
-  await User.findByIdAndUpdate(_id, {$pull: { favorite: idNotice }});
-  const updatedFavoriteData = await User.findById({_id});
-  res.status(200).json(updatedFavoriteData)
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {
     addProduct: ctrlWrapper(addProduct),
@@ -252,12 +160,6 @@ module.exports = {
     getProductByCategory: ctrlWrapper(getProductByCategory),
     getSubcategoryByCategory: ctrlWrapper(getSubcategoryByCategory),
     getProductBySearch: ctrlWrapper(getProductBySearch),
-
-    getNoticesBySearchOrCategory: ctrlWrapper(getNoticesBySearchOrCategory),
-    getNoticeById: ctrlWrapper(getNoticeById),
-    getNoticesСreatedByUser: ctrlWrapper(getNoticesСreatedByUser),
-    deleteNoticeCreatedByUser: ctrlWrapper(deleteNoticeCreatedByUser),
-    addNoticeToFavorite: ctrlWrapper(addNoticeToFavorite),
-    getNoticesAddedToFavoriteByUser: ctrlWrapper(getNoticesAddedToFavoriteByUser),
-    deleteNoticeFromFavorite: ctrlWrapper(deleteNoticeFromFavorite),
+    updateCategory: ctrlWrapper(updateCategory),
+    // updateSubCategory: ctrlWrapper(updateSubCategory),
 };

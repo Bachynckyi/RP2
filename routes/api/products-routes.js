@@ -16,11 +16,7 @@ router.get("/getsubcategorybycategory/:id", ctrl.getSubcategoryByCategory);
 router.get("/getproductbycategory/:id", ctrl.getProductByCategory);
 router.get("/getproductbysearch/", ctrl.getProductBySearch);
 
-// router.get("/userfavoritenotices", authenticate, ctrl.getNoticesAddedToFavoriteByUser);
-// router.get("/mynotices", authenticate, ctrl.getNoticesСreatedByUser);
-// router.get("/:id", isValidId, ctrl.getNoticeById);
-// router.delete("/removenoticefromfavorite/:id", authenticate, isValidId, ctrl.deleteNoticeFromFavorite);
-// router.delete("/:id", authenticate, ctrl.deleteNoticeCreatedByUser);
-// router.patch("/addnoticetofavorite/:id", authenticate, isValidId, ctrl.addNoticeToFavorite);
+router.patch("/updatecategory/:id", authenticate, uploadCloud.single("photoCategory"), ctrl.updateCategory);
+
 
 module.exports = router;
