@@ -18,5 +18,8 @@ router.get("/getproductbysearch/", ctrl.getProductBySearch);
 
 router.patch("/updatecategorywithphoto/:id", authenticate, uploadCloud.single("photoCategory"), ctrl.updateCategoryWithPhoto);
 router.patch("/updatecategorywithoutphoto/:id", authenticate, ctrl.updateCategoryWithoutPhoto);
+router.patch("/updatesubcategorywithphoto/:id", authenticate, uploadCloud.single("photoCategory"), ctrl.updateSubcategoryWithPhoto);
+router.patch("/updatesubcategorywithoutphoto/:id", authenticate, ctrl.updateSubcategoryWithoutPhoto);
+
 
 module.exports = router;

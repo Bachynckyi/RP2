@@ -119,14 +119,23 @@ const updateCategoryWithoutPhoto = async (req, res) => {
   res.json(result);
 };
 
-// const updateSubCategory = async (req, res) => {
-//   const { id } = req.params;
-//   const result = await Subcategory.findByIdAndUpdate(id, {...req.body, photoCategory: req.file.path}, { new: true });
-//   if (!result) {
-//     throw HttpError(404, `Not found`);
-//   }
-//   res.json(result);
-// };
+const updateSubcategoryWithPhoto = async (req, res) => {
+  const { id } = req.params;
+  const result = await Subcategory.findByIdAndUpdate(id, {...req.body, photoSubcategory: req.file.path}, { new: true });
+  if (!result) {
+    throw HttpError(404, `Not found`);
+  }
+  res.json(result);
+};
+
+const updateSubcategoryWithoutPhoto = async (req, res) => {
+  const { id } = req.params;
+  const result = await Subcategory.findByIdAndUpdate(id, {...req.body}, { new: true });
+  if (!result) {
+    throw HttpError(404, `Not found`);
+  }
+  res.json(result);
+};
 
 
 
@@ -171,5 +180,6 @@ module.exports = {
     getProductBySearch: ctrlWrapper(getProductBySearch),
     updateCategoryWithPhoto: ctrlWrapper(updateCategoryWithPhoto),
     updateCategoryWithoutPhoto: ctrlWrapper(updateCategoryWithoutPhoto),
-    // updateSubCategory: ctrlWrapper(updateSubCategory),
+    updateSubcategoryWithPhoto: ctrlWrapper(updateSubcategoryWithPhoto),
+    updateSubcategoryWithoutPhoto: ctrlWrapper(updateSubcategoryWithoutPhoto),
 };
