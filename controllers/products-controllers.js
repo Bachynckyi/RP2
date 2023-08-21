@@ -137,6 +137,18 @@ const updateSubcategoryWithoutPhoto = async (req, res) => {
   res.json(result);
 };
 
+const getProductById = async (req, res) => {
+  const result = await Product.find({_id: req.params.id});
+  if (!result) {
+    throw HttpError(404, "Not Found");
+  }
+  res.json(result);
+};
+
+
+
+
+
 
 
 
@@ -182,4 +194,5 @@ module.exports = {
     updateCategoryWithoutPhoto: ctrlWrapper(updateCategoryWithoutPhoto),
     updateSubcategoryWithPhoto: ctrlWrapper(updateSubcategoryWithPhoto),
     updateSubcategoryWithoutPhoto: ctrlWrapper(updateSubcategoryWithoutPhoto),
+    getProductById: ctrlWrapper(getProductById),
 };

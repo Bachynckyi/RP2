@@ -15,6 +15,7 @@ router.get("/getsubcategorybycategory/:id", ctrl.getSubcategoryByCategory);
 
 router.get("/getproductbycategory/:id", ctrl.getProductByCategory);
 router.get("/getproductbysearch/", ctrl.getProductBySearch);
+router.get("/getproductbyid/:id", ctrl.getProductById);
 
 router.patch("/updatecategorywithphoto/:id", authenticate, uploadCloud.single("photoCategory"), ctrl.updateCategoryWithPhoto);
 router.patch("/updatecategorywithoutphoto/:id", authenticate, ctrl.updateCategoryWithoutPhoto);
