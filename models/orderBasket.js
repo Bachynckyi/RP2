@@ -17,7 +17,6 @@ const OrderBasketSchema = Schema({
    },
    comments: {
     type: String,
-    required: true,
    },
    date: {
     type: String,
