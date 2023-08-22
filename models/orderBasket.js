@@ -58,7 +58,7 @@ const orderValidation = Joi.object({
     date: Joi.string().required().messages({
       "any.required": "missing required field - date",
     }),
-    comments: Joi.string().required().messages({
+    comments: Joi.string().required().allow("").messages({
       "any.required": "missing required field - comments",
     }),
     locality: Joi.string().required().allow("").messages({
