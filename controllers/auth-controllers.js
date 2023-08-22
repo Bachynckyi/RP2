@@ -45,25 +45,6 @@ const login = async (req, res) => {
   res.status(200).json({token, user});
 };
 
-const refreshToken = async (req, res) => {
-  const user = req.user;
-  const userInfo = await User.find({ _id: user });
-
-  if (!userInfo) {
-    throw HttpError(404, "Not found");
-  }
-
-  const payload = {
-    id: user._id,
-  };
-
-  const refreshToken = jwt.sign(payload, SECRET_KEY, { expiresIn: "720h" });
-
-  res.json({
-    refreshToken,
-  });
-};
-
 const logout = async (req, res) => {
   const { _id } = req.user;
   await User.findByIdAndUpdate(_id, { token: "" });
@@ -71,6 +52,12 @@ const logout = async (req, res) => {
     message: "Logout success",
   });
 };
+
+const getCurrent = async (req, res) => {
+  const user = req.user;
+  res.status(200).json({user});
+};
+
 
 const updateUserById = async (req, res) => {
   const { id } = req.params;
@@ -97,11 +84,6 @@ const updateAvatar = async (req, res) => {
   }
 };
 
-const getCurrent = async (req, res) => {
-  const user = req.user;
-  res.status(200).json({user})
-};
-
 const getUserById = async (req, res) => {
   const {id} = req.params;
   const result = await User.findById(id);
@@ -112,6 +94,26 @@ const getUserById = async (req, res) => {
   const phone = result.Phone;
   res.status(200).json({email, phone});
 };
+
+const refreshToken = async (req, res) => {
+  const user = req.user;
+  const userInfo = await User.find({ _id: user });
+
+  if (!userInfo) {
+    throw HttpError(404, "Not found");
+  }
+
+  const payload = {
+    id: user._id,
+  };
+
+  const refreshToken = jwt.sign(payload, SECRET_KEY, { expiresIn: "720h" });
+
+  res.json({
+    refreshToken,
+  });
+};
+
 
 module.exports = {
   register: ctrlWrapper(register),
