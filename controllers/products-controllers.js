@@ -249,7 +249,7 @@ const deleteSubcategory = async (req, res) => {
       else {
         const subcategoryPublicId = resultSubcategory[0].photoSubcategory.split("/").pop().split(".")[0];
         await cloudinary.uploader.destroy(subcategoryPublicId);
-        await Category.findOneAndRemove({_id: id});
+        await Subcategory.findOneAndRemove({_id: id});
   
   // Product delete from cloud and database
         const subcategory = resultSubcategory[0].subcategory;
