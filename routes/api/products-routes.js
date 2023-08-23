@@ -22,5 +22,8 @@ router.patch("/updatecategorywithoutphoto/:id", authenticate, ctrl.updateCategor
 router.patch("/updatesubcategorywithphoto/:id", authenticate, uploadCloud.single("photoSubcategory"), ctrl.updateSubcategoryWithPhoto);
 router.patch("/updatesubcategorywithoutphoto/:id", authenticate, ctrl.updateSubcategoryWithoutPhoto);
 
+router.delete("/deletecategory/:id", authenticate, ctrl.deleteCategory);
+router.delete("/deletesubcategory/:id", authenticate, ctrl.deleteSubcategory);
+router.delete("/deleteproduct/:id", authenticate, ctrl.deleteProduct);
 
 module.exports = router;

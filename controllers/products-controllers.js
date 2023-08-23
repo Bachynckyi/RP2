@@ -6,6 +6,16 @@ const { HttpError } = require("../helpers");
 const { addProductValidation } = require("../models/product");
 const { addCategoryValidation} = require("../models/category");
 const { addSubcategoryValidation} = require("../models/subcategory");
+const cloudinary = require("cloudinary").v2;
+
+const { API_KEY, CLOUD_NAME, API_SECRET } = process.env;
+
+cloudinary.config({
+    cloud_name: CLOUD_NAME,
+    api_key: API_KEY,
+    api_secret: API_SECRET,
+  });
+
 
 const addProduct = async (req, res) => {
   // const {title}  = req.body;
@@ -103,6 +113,11 @@ const getProductBySearch = async (req, res) => {
 
 const updateCategoryWithPhoto = async (req, res) => {
   const { id } = req.params;
+  // Delete an old image
+  const resultCategory = await Category.find({_id: id});
+  const categoryPublicId = resultCategory[0].photoCategory.split("/").pop().split(".")[0];
+  await cloudinary.uploader.destroy(categoryPublicId);
+  // Update category 
   const result = await Category.findByIdAndUpdate(id, {...req.body, photoCategory: req.file.path}, { new: true });
   if (!result) {
     throw HttpError(404, `Not found`);
@@ -121,6 +136,11 @@ const updateCategoryWithoutPhoto = async (req, res) => {
 
 const updateSubcategoryWithPhoto = async (req, res) => {
   const { id } = req.params;
+  // Delete an old image
+  const resultSubcategory = await Subcategory.find({_id: id});
+  const subcategoryPublicId = resultSubcategory[0].photoSubcategory.split("/").pop().split(".")[0];
+  await cloudinary.uploader.destroy(subcategoryPublicId);
+  // Update subcategory
   const result = await Subcategory.findByIdAndUpdate(id, {...req.body, photoSubcategory: req.file.path}, { new: true });
   if (!result) {
     throw HttpError(404, `Not found`);
@@ -143,6 +163,131 @@ const getProductById = async (req, res) => {
     throw HttpError(404, "Not Found");
   }
   res.json(result);
+};
+
+const deleteCategory = async (req, res) => {
+
+// Category delete from cloud and database
+    const id = req.params.id;
+    const resultCategory = await Category.find({_id: id});
+
+    if (resultCategory.length === 0) {
+      throw HttpError(404, "Not Found")
+    }
+    else {
+      const categoryPublicId = resultCategory[0].photoCategory.split("/").pop().split(".")[0];
+      await cloudinary.uploader.destroy(categoryPublicId);
+      await Category.findOneAndRemove({_id: id});
+
+// Subcategory delete from cloud and database
+    const category = resultCategory[0].category;
+    const resultSubcategories = await Subcategory.find({category: category});
+
+    if(resultSubcategories.length === 0) {
+      const resultProducts = await Product.find({category: category})
+
+// if category don't have a subcategories, will found products without subcategory
+      const productPublicId = resultProducts.map((item) => {
+        return (item.photo.split("/").pop().split(".")[0])});
+        for (const publicId of productPublicId) {
+          await cloudinary.uploader.destroy(publicId)};
+
+        const productId = resultProducts.map((item) => {
+          return (item._id)});
+        for (const id of productId) {
+          await Product.findOneAndRemove({_id: id});};
+      res.status(200).json("All items have been deleted")
+    }
+    else {
+      const subcategoryPublicId = resultSubcategories.map((item) => {
+        return (item.photoSubcategory.split("/").pop().split(".")[0])});
+
+      for (const publicId of subcategoryPublicId) {
+        await cloudinary.uploader.destroy(publicId);};
+      
+      const subcategoryId = resultSubcategories.map((item) => {
+        return (item._id)});
+      
+        for (const id of subcategoryId) {
+          await Subcategory.findOneAndRemove({_id: id});};
+
+// Product delete from cloud and database
+      const subcategoryName = resultSubcategories.map((item) => {
+        return (item.subcategory)});
+
+      for (const subcategory of subcategoryName) {
+        const resultProducts = await Product.find({subcategory: subcategory})
+        if(resultProducts.length === 0){
+          res.status(200).json("Zero products")
+        }
+        else {
+          const productPublicId = resultProducts.map((item) => {
+            return (item.photo.split("/").pop().split(".")[0])});
+            
+            for (const publicId of productPublicId) {
+              await cloudinary.uploader.destroy(publicId)};
+
+            const productId = resultProducts.map((item) => {
+              return (item._id)});
+
+            for (const id of productId) {
+              await Product.findOneAndRemove({_id: id});};
+            res.status(200).json("Zero products")
+        }
+      };
+    }
+  }
+};
+
+const deleteSubcategory = async (req, res) => {
+      const id = req.params.id;
+  // Subcategory delete from cloud and database
+      const resultSubcategory = await Subcategory.find({_id: id});
+      if(resultSubcategory.length === 0) {
+        throw HttpError(404, "Not Found")
+      }
+      else {
+        const subcategoryPublicId = resultSubcategory[0].photoSubcategory.split("/").pop().split(".")[0];
+        await cloudinary.uploader.destroy(subcategoryPublicId);
+        await Category.findOneAndRemove({_id: id});
+  
+  // Product delete from cloud and database
+        const subcategory = resultSubcategory[0].subcategory;
+        const resultProducts = await Product.find({subcategory: subcategory})
+        if(resultProducts.length === 0) {
+          res.status(200).json("Zero products")
+        }
+        else {
+          const productPublicId = resultProducts.map((item) => {
+            return (item.photo.split("/").pop().split(".")[0])});
+            
+          for (const publicId of productPublicId) {
+            await cloudinary.uploader.destroy(publicId)};
+
+          const productId = resultProducts.map((item) => {
+            return (item._id)});
+
+          for (const id of productId) {
+            await Product.findOneAndRemove({_id: id});};
+
+          res.status(200).json("Zero products")
+      };
+    }
+};
+
+const deleteProduct = async (req, res) => {
+  const id = req.params.id;
+
+    const resultProducts = await Product.find({_id: id})
+    if(resultProducts.length === 0) {
+      throw HttpError(404, "Not Found")
+    }
+    else {
+      const productPublicId = resultProducts[0].photo.split("/").pop().split(".")[0];
+        await cloudinary.uploader.destroy(productPublicId)
+        await Product.findOneAndRemove({_id: id});
+        res.status(200).json("Deleted")
+      };
 };
 
 
@@ -195,4 +340,7 @@ module.exports = {
     updateSubcategoryWithPhoto: ctrlWrapper(updateSubcategoryWithPhoto),
     updateSubcategoryWithoutPhoto: ctrlWrapper(updateSubcategoryWithoutPhoto),
     getProductById: ctrlWrapper(getProductById),
+    deleteCategory: ctrlWrapper(deleteCategory),
+    deleteSubcategory: ctrlWrapper(deleteSubcategory),
+    deleteProduct: ctrlWrapper(deleteProduct),
 };
