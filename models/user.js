@@ -36,7 +36,7 @@ const userSchema = new Schema({
     type: String,
     default: "",
   },
-  favorite: {
+  basket: {
     type: Array,
     default: [],
   }
@@ -45,10 +45,10 @@ const userSchema = new Schema({
 const addSchema = Joi.object({
   name: Joi.string(),
   email: Joi.string(),
-  Birthday: Joi.string(),
+  birthday: Joi.string(),
   Phone: Joi.string(),
-  City: Joi.string(),
-  favorite: Joi.boolean(),
+  city: Joi.string(),
+  basket: Joi.boolean(),
 });
 
 userSchema.post("save", handleMongooseError);
