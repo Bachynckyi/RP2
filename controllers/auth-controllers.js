@@ -58,70 +58,33 @@ const getCurrent = async (req, res) => {
   res.status(200).json({user});
 };
 
-
-const updateUserById = async (req, res) => {
-  const { id } = req.params;
-  const result = await User.findByIdAndUpdate(id, req.body, { new: true });
-  if (!result) {
-    throw HttpError(404, `Not found`);
-  }
-  res.json(result);
-};
-
-const updateAvatar = async (req, res) => {
-  const { _id } = req.user;
-  const maxSizeOfAvatar = 3145728;
-  if (req.file) {
-    if (req.file.size > maxSizeOfAvatar) {
-      return res.status(400).json({ message: "Uploaded file is too big" });
-    }
-    await User.findByIdAndUpdate(_id, { avatarURL: req.file.path });
-    const result = await User.findById(_id);
-    return res.status(201).json(result);
-  }
-  else if (!req.file) {
-    return res.status(400).json({ message: "Cannot find a file to upload" });
-  }
-};
-
-const getUserById = async (req, res) => {
-  const {id} = req.params;
-  const result = await User.findById(id);
-  if(!result){
-    throw HttpError(404, `Not found`);
-  }
-  const email = result.email;
-  const phone = result.Phone;
-  res.status(200).json({email, phone});
-};
-
-const refreshToken = async (req, res) => {
-  const user = req.user;
-  const userInfo = await User.find({ _id: user });
-
-  if (!userInfo) {
+const addToBasket = async (req, res) => {
+  const userId = req.user._id;
+  const result = await User.findByIdAndUpdate(userId, {$push: { basket: req.body}}, {new: true});
+  if(!result) {
     throw HttpError(404, "Not found");
   }
-
-  const payload = {
-    id: user._id,
-  };
-
-  const refreshToken = jwt.sign(payload, SECRET_KEY, { expiresIn: "720h" });
-
-  res.json({
-    refreshToken,
-  });
+  res.status(200);
 };
 
+const removeFromBasket = async (req, res) => {
+  const userId = req.user._id;
+  const idProduct = req.params.id;
+  const result = await User.findById({_id: userId});
+  if(!result) {
+    throw HttpError(404, "Not found");
+  }
+  const currentBasket = result.basket;
+  const newBasket = currentBasket.filter(currentBasket => currentBasket.id !== idProduct);
+  const updatedUser = await User.findByIdAndUpdate(userId, { basket: newBasket}, {new: true});
+  res.status(200).json(updatedUser);
+};
 
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   logout: ctrlWrapper(logout),
-  updateAvatar: ctrlWrapper(updateAvatar),
-  updateUserById: ctrlWrapper(updateUserById),
-  refreshToken: ctrlWrapper(refreshToken),
+  addToBasket: ctrlWrapper(addToBasket),
+  removeFromBasket: ctrlWrapper(removeFromBasket),
   getCurrent: ctrlWrapper(getCurrent),
-  getUserById: ctrlWrapper(getUserById),
 };
