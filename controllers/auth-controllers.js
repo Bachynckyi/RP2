@@ -60,7 +60,7 @@ const getCurrent = async (req, res) => {
 
 const addToBasket = async (req, res) => {
   const userId = req.user._id;
-  const result = await User.findByIdAndUpdate(userId, {$push: { basket: req.body}}, {new: true});
+  const result = await User.findByIdAndUpdate(userId, {$push: { basket: req.body.data}}, {new: true});
   if(!result) {
     throw HttpError(404, "Not found");
   }
