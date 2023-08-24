@@ -75,7 +75,7 @@ const removeFromBasket = async (req, res) => {
     throw HttpError(404, "Not found");
   }
   const currentBasket = result.basket;
-  const newBasket = currentBasket.filter(currentBasket => currentBasket.id !== idProduct);
+  const newBasket = currentBasket.filter(currentBasket => currentBasket._id !== idProduct);
   const updatedUser = await User.findByIdAndUpdate(userId, { basket: newBasket}, {new: true});
   res.status(200).json(updatedUser);
 };
