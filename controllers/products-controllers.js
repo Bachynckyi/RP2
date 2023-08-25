@@ -290,6 +290,31 @@ const deleteProduct = async (req, res) => {
       };
 };
 
+const updateProductWithPhoto = async (req, res) => {
+  const { id } = req.params;
+  // Delete an old image
+  const resultProduct = await Product.find({_id: id});
+  const productPublicId = resultProduct[0].photo.split("/").pop().split(".")[0];
+  await cloudinary.uploader.destroy(productPublicId);
+  // Update product
+  const result = await Product.findByIdAndUpdate(id, {...req.body, photo: req.file.path}, { new: true });
+  if (!result) {
+    throw HttpError(404, `Not found`);
+  }
+  res.json(result);
+};
+
+const updateProductWithoutPhoto = async (req, res) => {
+  const { id } = req.params;
+  const result = await Product.findByIdAndUpdate(id, {...req.body}, { new: true });
+  if (!result) {
+    throw HttpError(404, `Not found`);
+  }
+  res.json(result);
+};
+
+
+
 
 
 
@@ -343,4 +368,6 @@ module.exports = {
     deleteCategory: ctrlWrapper(deleteCategory),
     deleteSubcategory: ctrlWrapper(deleteSubcategory),
     deleteProduct: ctrlWrapper(deleteProduct),
+    updateProductWithPhoto: ctrlWrapper(updateProductWithPhoto),
+    updateProductWithoutPhoto: ctrlWrapper(updateProductWithoutPhoto),
 };
