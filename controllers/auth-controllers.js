@@ -80,6 +80,32 @@ const removeFromBasket = async (req, res) => {
   res.status(200).json(updatedUser);
 };
 
+const clearBasket = async (req, res) => {
+  const userId = req.user._id;
+  const result = await User.findByIdAndUpdate(userId, { basket: []}, {new: true});
+  if(!result){
+    throw HttpError(404, "Not found");
+  }
+  res.status(200).json(result);
+};
+
+const updateQuantityInBasket = async (req, res) => {
+  const userId = req.user._id;
+  const idProduct = req.params.id;
+  const newQuantity = req.body.quantity;
+  const result = await User.findById({_id: userId});
+  if(!result) {
+    throw HttpError(404, "Not found");
+  }
+  const currentBasket = result.basket;
+  const newBasket = currentBasket.map(item => item._id === idProduct ? {...item, quantity: newQuantity} : item);
+  if(newBasket.length === 0){
+    throw HttpError(404, "Not found");
+  }
+  const updatedUser = await User.findByIdAndUpdate(userId, { basket: newBasket}, {new: true});
+  res.status(200).json(updatedUser);
+};
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
@@ -87,4 +113,6 @@ module.exports = {
   addToBasket: ctrlWrapper(addToBasket),
   removeFromBasket: ctrlWrapper(removeFromBasket),
   getCurrent: ctrlWrapper(getCurrent),
+  clearBasket: ctrlWrapper(clearBasket),
+  updateQuantityInBasket : ctrlWrapper(updateQuantityInBasket),
 };

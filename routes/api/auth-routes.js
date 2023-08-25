@@ -12,6 +12,8 @@ router.post("/logout", authenticate, ctrl.logout);
 router.get("/current", authenticate, ctrl.getCurrent);
 router.patch("/addtobasket", authenticate, ctrl.addToBasket);
 router.patch("/removefrombasket/:id", authenticate, ctrl.removeFromBasket);
+router.patch("/clearbasket", authenticate, ctrl.clearBasket);
+router.patch("/updatequantityinbasket/:id", authenticate, ctrl.updateQuantityInBasket);
 
 // router.put("/update/:id", authenticate, validateBody(schemas.addSchema), ctrl.updateUserById);
 // router.get("/newtoken/:id", authenticate, ctrl.refreshToken);
