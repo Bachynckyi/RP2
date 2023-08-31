@@ -2,6 +2,7 @@ const { ctrlWrapper } = require("../utils");
 const { Product } = require("../models/product");
 const { Category } = require("../models/category");
 const { Subcategory } = require("../models/subcategory");
+const { Slider } = require("../models/slider");
 const { HttpError } = require("../helpers");
 const { addProductValidation } = require("../models/product");
 const { addCategoryValidation} = require("../models/category");
@@ -15,7 +16,6 @@ cloudinary.config({
     api_key: API_KEY,
     api_secret: API_SECRET,
   });
-
 
 const addProduct = async (req, res) => {
   // const {title}  = req.body;
@@ -313,43 +313,32 @@ const updateProductWithoutPhoto = async (req, res) => {
   res.json(result);
 };
 
+const addPhotoSlider = async (req, res) => {
+  const result = await Slider.create({photoSlider: req.file.path});
+  res.status(201).json(result)
+};
 
+const deletePhotoSlider = async (req, res) => {
+  const id = req.params.id;
+  const resultSliderPhoto = await Slider.find({_id: id})
+  if(resultSliderPhoto.length === 0) {
+    throw HttpError(404, "Not Found")
+  }
+  else {
+    const SliderPublicId = resultSliderPhoto[0].photoSlider.split("/").pop().split(".")[0];
+      await cloudinary.uploader.destroy(SliderPublicId)
+      await Slider.findOneAndRemove({_id: id});
+      res.status(200).json("Deleted")
+    };
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const getAllPhotoSlider = async (req, res) => {
+  const result = await Slider.find()
+  if (!result) {
+    throw HttpError(404, "Not Found");
+  }
+  res.json(result);
+};
 
 module.exports = {
     addProduct: ctrlWrapper(addProduct),
@@ -370,4 +359,7 @@ module.exports = {
     deleteProduct: ctrlWrapper(deleteProduct),
     updateProductWithPhoto: ctrlWrapper(updateProductWithPhoto),
     updateProductWithoutPhoto: ctrlWrapper(updateProductWithoutPhoto),
+    addPhotoSlider: ctrlWrapper(addPhotoSlider),
+    deletePhotoSlider: ctrlWrapper(deletePhotoSlider),
+    getAllPhotoSlider: ctrlWrapper(getAllPhotoSlider),
 };
