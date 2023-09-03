@@ -340,6 +340,57 @@ const getAllPhotoSlider = async (req, res) => {
   res.json(result);
 };
 
+const updateStatusCategory = async (req, res) => {
+  // Category change status of active
+      const id = req.params.id;
+      const resultCategory = await Category.find({_id: id});
+  
+      if (resultCategory.length === 0) {
+        throw HttpError(404, "Not Found")
+      }
+      else {
+        await Category.findByIdAndUpdate(id, {...req.body});
+        const category = resultCategory[0].category;
+        const resultSubcategories = await Subcategory.find({category: category});
+    // if category don't have a subcategories, will found products without subcategory
+        if(resultSubcategories.length === 0) {
+          const resultProducts = await Product.find({category: category})
+          const productId = resultProducts.map((item) => {
+            return (item._id)});
+          for (const id of productId) {
+            await Product.findByIdAndUpdate(id, {...req.body})};
+          res.status(200).json("All items have been updated")
+        }
+        else {
+          const subcategoryId = resultSubcategories.map((item) => {
+            return (item._id)});
+          
+            for (const id of subcategoryId) {
+              await Subcategory.findByIdAndUpdate(id, {...req.body})};
+    
+    // Product delete from cloud and database
+          const subcategoryName = resultSubcategories.map((item) => {
+            return (item.subcategory)});
+    
+          for (const subcategory of subcategoryName) {
+            const resultProducts = await Product.find({subcategory: subcategory})
+            if(resultProducts.length === 0){
+              res.status(200).json("Zero products")
+            }
+            else {
+                const productId = resultProducts.map((item) => {
+                  return (item._id)});
+    
+                for (const id of productId) {
+                  await Product.findByIdAndUpdate(id, {...req.body})};
+                res.status(200).json("Zero products")
+            }
+          };
+        }
+    } 
+  };
+
+
 module.exports = {
     addProduct: ctrlWrapper(addProduct),
     addCategory: ctrlWrapper(addCategory),
@@ -362,4 +413,5 @@ module.exports = {
     addPhotoSlider: ctrlWrapper(addPhotoSlider),
     deletePhotoSlider: ctrlWrapper(deletePhotoSlider),
     getAllPhotoSlider: ctrlWrapper(getAllPhotoSlider),
+    updateStatusCategory: ctrlWrapper(updateStatusCategory),
 };
