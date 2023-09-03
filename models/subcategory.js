@@ -27,7 +27,10 @@ const SubcategorySchema = Schema({
     type: String,
     required: true,
    },
-   
+   active: {
+    type: Boolean,
+    default: true,
+   },
 }, {versionKey: false});
 
 SubcategorySchema.post("save", handleMongooseError);
@@ -48,7 +51,9 @@ const addSubcategoryValidation = Joi.object({
     category: Joi.string().required().messages({
       "any.required": "missing required field - category",
     }),
-
+    active: Joi.boolean().allow('').messages({
+      "any.required": "missing required field - active",
+    }),
 });
 
 const Subcategory = model("subcategories", SubcategorySchema);
