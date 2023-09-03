@@ -368,7 +368,7 @@ const updateStatusCategory = async (req, res) => {
             for (const id of subcategoryId) {
               await Subcategory.findByIdAndUpdate(id, {...req.body})};
     
-    // Product delete from cloud and database
+    // Product change status active
           const subcategoryName = resultSubcategories.map((item) => {
             return (item.subcategory)});
     
@@ -388,8 +388,48 @@ const updateStatusCategory = async (req, res) => {
           };
         }
     } 
-  };
+};
 
+const updateStatusSubcategory = async (req, res) => {
+  const id = req.params.id;
+  // Subcategory change status active
+      const resultSubcategory = await Subcategory.find({_id: id});
+      if(resultSubcategory.length === 0) {
+        throw HttpError(404, "Not Found")
+      }
+      else {
+        await Subcategory.findByIdAndUpdate(id, {...req.body});
+  
+  // Product change status active
+        const subcategory = resultSubcategory[0].subcategory;
+        const resultProducts = await Product.find({subcategory: subcategory})
+        if(resultProducts.length === 0) {
+          res.status(200).json("Zero products")
+        }
+        else {
+          const productId = resultProducts.map((item) => {
+            return (item._id)});
+
+          for (const id of productId) {
+            await Product.findByIdAndUpdate(id, {...req.body});};
+
+          res.status(200).json("Zero products")
+      };
+    }
+};
+
+const updateStatusProduct = async (req, res) => {
+  const id = req.params.id;
+
+  const resultProducts = await Product.find({_id: id})
+  if(resultProducts.length === 0) {
+    throw HttpError(404, "Not Found")
+  }
+  else {
+      await Product.findByIdAndUpdate(id, {...req.body});
+      res.status(200).json("Deleted")
+    };
+};
 
 module.exports = {
     addProduct: ctrlWrapper(addProduct),
@@ -414,4 +454,6 @@ module.exports = {
     deletePhotoSlider: ctrlWrapper(deletePhotoSlider),
     getAllPhotoSlider: ctrlWrapper(getAllPhotoSlider),
     updateStatusCategory: ctrlWrapper(updateStatusCategory),
+    updateStatusSubcategory: ctrlWrapper(updateStatusSubcategory),
+    updateStatusProduct: ctrlWrapper(updateStatusProduct),
 };
