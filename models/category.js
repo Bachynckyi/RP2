@@ -21,7 +21,7 @@ const CategorySchema = Schema({
    },
    active: {
     type: Boolean,
-    default: true,
+    required: true,
    },
 }, {versionKey: false});
 
@@ -37,7 +37,7 @@ const addCategoryValidation = Joi.object({
     descriptionCategory: Joi.string().required().messages({
       "any.required": "missing required field - descriptionCategory",
     }),
-    active: Joi.boolean().allow('').messages({
+    active: Joi.boolean().required().messages({
       "any.required": "missing required field - active",
     }),
 });

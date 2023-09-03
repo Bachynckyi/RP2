@@ -29,7 +29,7 @@ const SubcategorySchema = Schema({
    },
    active: {
     type: Boolean,
-    default: true,
+    required: true,
    },
 }, {versionKey: false});
 
@@ -51,7 +51,7 @@ const addSubcategoryValidation = Joi.object({
     category: Joi.string().required().messages({
       "any.required": "missing required field - category",
     }),
-    active: Joi.boolean().allow('').messages({
+    active: Joi.boolean().required().messages({
       "any.required": "missing required field - active",
     }),
 });
