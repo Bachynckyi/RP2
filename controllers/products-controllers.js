@@ -427,9 +427,23 @@ const updateStatusProduct = async (req, res) => {
   }
   else {
       await Product.findByIdAndUpdate(id, {...req.body});
+      res.status(200).json("Updated")
+    };
+};
+
+const updateTopProduct = async (req, res) => {
+  const id = req.params.id;
+
+  const resultProducts = await Product.find({_id: id})
+  if(resultProducts.length === 0) {
+    throw HttpError(404, "Not Found")
+  }
+  else {
+      await Product.findByIdAndUpdate(id, {...req.body});
       res.status(200).json("Deleted")
     };
 };
+
 
 module.exports = {
     addProduct: ctrlWrapper(addProduct),
@@ -456,4 +470,5 @@ module.exports = {
     updateStatusCategory: ctrlWrapper(updateStatusCategory),
     updateStatusSubcategory: ctrlWrapper(updateStatusSubcategory),
     updateStatusProduct: ctrlWrapper(updateStatusProduct),
+    updateTopProduct: ctrlWrapper(updateTopProduct),
 };

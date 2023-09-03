@@ -27,6 +27,7 @@ router.patch("/updateproductwithoutphoto/:id", authenticate, ctrl.updateProductW
 router.patch("/updatestatuscategory/:id", authenticate, ctrl.updateStatusCategory);
 router.patch("/updatestatussubcategory/:id", authenticate, ctrl.updateStatusSubcategory);
 router.patch("/updatestatusproduct/:id", authenticate, ctrl.updateStatusProduct);
+router.patch("/updatetopproduct/:id", authenticate, ctrl.updateTopProduct);
 
 router.delete("/deletecategory/:id", authenticate, ctrl.deleteCategory);
 router.delete("/deletesubcategory/:id", authenticate, ctrl.deleteSubcategory);
