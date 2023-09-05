@@ -444,6 +444,14 @@ const updateTopProduct = async (req, res) => {
     };
 };
 
+const getAllTopProducts = async (req, res) => {
+  const result = await Product.find({top: true});
+  if(!result) {
+    throw HttpError(404, "Not Found")
+  }
+  res.status(200).json(result)
+};
+
 
 module.exports = {
     addProduct: ctrlWrapper(addProduct),
@@ -471,4 +479,5 @@ module.exports = {
     updateStatusSubcategory: ctrlWrapper(updateStatusSubcategory),
     updateStatusProduct: ctrlWrapper(updateStatusProduct),
     updateTopProduct: ctrlWrapper(updateTopProduct),
+    getAllTopProducts: ctrlWrapper(getAllTopProducts),
 };
